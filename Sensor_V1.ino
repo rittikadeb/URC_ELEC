@@ -1,4 +1,6 @@
 #include "SparkFun_AS7265X.h" 
+#include <DFRobot_DHT11.h>
+DFRobot_DHT11 DHT;
 #define MoisturePin A0
 #define dhtPin A1
 #define GasSensor A4
@@ -24,13 +26,15 @@ void loop() {
   sensor.takeMeasurements(); //This is a hard wait while all 18 channels are measured
   int MoistureValue= analogRead(MoisturePin); 
   int GasSensorVal= analogRead(GasSensor);
-  int dhtPinVal= analogRead(dhtPin);
+  DHT.read(dhtPin);
   Serial.print("Moisture Reading: ");
   Serial.println(MoistureValue);//reading moisture value
   Serial.print("Gas Sensor Reading: ");
   Serial.println(GasSensorVal);//reading gas sensor value
-  Serial.print("DHT11 Reading: ");
-  Serial.println(dhtPinVal);//reading dht11 reading
+  Serial.print("Temperature Reading: ");
+  Serial.println(DHT.temperature);//reading dht11 temperature reading
+  Serial.print("Humidity Reading: ");
+  Serial.println(DHT.humidity);//reading dht11 humidity reading
   Serial.print("Spectral Sensor Reading: ");
   Serial.print(sensor.getCalibratedA());
   Serial.print(",");
